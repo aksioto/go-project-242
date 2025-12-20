@@ -4,13 +4,18 @@ import (
 	"fmt"
 	"io/fs"
 	"os"
+	"strings"
 )
 
-func GetSize(path string) int64 {
+func GetSize(path string, includeHidden bool) int64 {
 	var size int64
 
 	fi, err := os.Lstat(path)
 	if err != nil {
+		return size
+	}
+
+	if !includeHidden && strings.HasPrefix(fi.Name(), ".") {
 		return size
 	}
 
@@ -32,6 +37,11 @@ func GetSize(path string) int64 {
 			if err != nil {
 				continue
 			}
+
+			if !includeHidden && strings.HasPrefix(info.Name(), ".") {
+				continue
+			}
+
 			size += info.Size()
 		}
 	}
