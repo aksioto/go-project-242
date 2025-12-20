@@ -38,3 +38,25 @@ func GetSize(path string) int64 {
 
 	return size
 }
+
+func FormatSize(bytes int64, isHuman bool) string {
+	if !isHuman {
+		return fmt.Sprintf("%dB", bytes)
+	}
+
+	if bytes <= 0 {
+		return "0B"
+	}
+
+	units := []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
+	const unit = 1024
+	i := 0
+
+	size := float64(bytes)
+	for size >= unit && i < len(units)-1 {
+		size /= unit
+		i++
+	}
+
+	return fmt.Sprintf("%.1f%s", size, units[i])
+}
