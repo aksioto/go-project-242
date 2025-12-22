@@ -13,19 +13,28 @@ import (
 func main() {
 	cmd := &cli.Command{
 		Name:  "hexlet-path-size",
-		Usage: "print size of a file or directory",
+		Usage: "print size of a file or directory; supports -r (recursive), -H (human-readable), -a (include hidden)",
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
-				Name:    "human",
-				Aliases: []string{"H"},
-				Value:   false,
-				Usage:   "human-readable sizes (auto-select unit)",
+				Name:        "recursive",
+				Aliases:     []string{"r"},
+				Value:       false,
+				DefaultText: "false",
+				Usage:       "recursive size of directories",
 			},
 			&cli.BoolFlag{
-				Name:    "all",
-				Aliases: []string{"a"},
-				Value:   false,
-				Usage:   "include hidden files and directories",
+				Name:        "human",
+				Aliases:     []string{"H"},
+				Value:       false,
+				DefaultText: "false",
+				Usage:       "human-readable sizes (auto-select unit)",
+			},
+			&cli.BoolFlag{
+				Name:        "all",
+				Aliases:     []string{"a"},
+				Value:       false,
+				DefaultText: "false",
+				Usage:       "include hidden files and directories",
 			},
 		},
 		Action: func(ctx context.Context, c *cli.Command) error {
@@ -34,11 +43,16 @@ func main() {
 			}
 
 			path := c.Args().Get(0)
-			includeHidden := c.Bool("all")
-			size := code.GetSize(path, includeHidden)
+			recursive := c.Bool("recursive")
+			human := c.Bool("human")
+			all := c.Bool("all")
 
-			isHuman := c.Bool("human")
-			fmt.Printf("%s\t%s", code.FormatSize(size, isHuman), path)
+			result, err := code.GetPathSize(path, recursive, human, all)
+			if err != nil {
+				return err
+			}
+
+			fmt.Printf("%s\t%s\n", result, path)
 
 			return nil
 		},
