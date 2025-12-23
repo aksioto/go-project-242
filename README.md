@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/aksioto/go-project-242/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/aksioto/go-project-242/actions)
-[![Go](https://github.com/aksioto/go-project-242/actions/workflows/go.yml/badge.svg)](https://github.com/aksioto/go-project-242/actions/workflows/go.yml)
+[![CI](https://github.com/aksioto/go-project-242/actions/workflows/go.yml/badge.svg)](https://github.com/aksioto/go-project-242/actions/workflows/go.yml)
 
 ### Description
 
@@ -47,3 +47,6 @@ func main() {
     // use size
 }
 ```
+
+### Demo
+[![asciicast](https://asciinema.org/a/vlH3Sla2phNh3YnS8qayYNN5A.svg)](https://asciinema.org/a/vlH3Sla2phNh3YnS8qayYNN5A)
